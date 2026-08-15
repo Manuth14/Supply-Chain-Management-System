@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Supply Chain Management - Sign In</title>
+    <title>Global Supply Chain Management - Create Account</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
 
 <div class="min-h-screen flex">
 
-    <!-- Left brand panel -->
+    <!-- Left brand panel (matches login.jsp) -->
     <div class="hidden lg:flex lg:w-[46%] relative bg-[#0B1220] overflow-hidden flex-col justify-between px-14 py-14">
 
         <!-- Bold geometric accent, bleeding off the top-right corner -->
@@ -68,7 +68,7 @@
 
         <!-- Trust line -->
         <p class="relative font-mono text-[11px] text-[#5B6B85] tracking-[0.15em] uppercase">
-            Trusted by logistics teams in 30+ countries
+            Trusted by logistics teams in 40+ countries
         </p>
     </div>
 
@@ -81,10 +81,38 @@
                 <p class="font-mono text-[11px] text-[#B4652F] tracking-[0.2em] uppercase mt-1">Supply Chain Management</p>
             </div>
 
-            <h2 class="font-display text-2xl font-semibold text-slate-900">Sign in to your account</h2>
-            <p class="text-sm text-slate-500 mt-1.5">Track shipments, manage orders, and view your manifests.</p>
+            <h2 class="font-display text-2xl font-semibold text-slate-900">Create your account</h2>
+            <p class="text-sm text-slate-500 mt-1.5">Set up access for your company in a few minutes.</p>
 
-            <form class="mt-8 space-y-5" action="${pageContext.request.contextPath}/login" method="POST">
+            <form class="mt-8 space-y-5" action="${pageContext.request.contextPath}/signup" method="POST">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="firstName" class="block text-sm font-medium text-slate-700">First name</label>
+                        <div class="mt-1.5">
+                            <input id="firstName" name="firstName" type="text" required placeholder="Kusal"
+                                   class="block w-full px-3.5 py-2.5 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 text-sm text-slate-900
+                                          focus:outline-none focus:ring-2 focus:ring-[#B4652F]/30 focus:border-[#B4652F] transition-colors">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="lastName" class="block text-sm font-medium text-slate-700">Last name</label>
+                        <div class="mt-1.5">
+                            <input id="lastName" name="lastName" type="text" required placeholder="Perera"
+                                   class="block w-full px-3.5 py-2.5 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 text-sm text-slate-900
+                                          focus:outline-none focus:ring-2 focus:ring-[#B4652F]/30 focus:border-[#B4652F] transition-colors">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="company" class="block text-sm font-medium text-slate-700">Company name</label>
+                    <div class="mt-1.5">
+                        <input id="company" name="company" type="text" required placeholder="Acme Logistics Pvt Ltd"
+                               class="block w-full px-3.5 py-2.5 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 text-sm text-slate-900
+                                      focus:outline-none focus:ring-2 focus:ring-[#B4652F]/30 focus:border-[#B4652F] transition-colors">
+                    </div>
+                </div>
+
                 <div>
                     <label for="email" class="block text-sm font-medium text-slate-700">Email address</label>
                     <div class="mt-1.5">
@@ -94,34 +122,43 @@
                     </div>
                 </div>
 
-                <div>
-                    <div class="flex items-center justify-between">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
                         <label for="password" class="block text-sm font-medium text-slate-700">Password</label>
-                        <a href="#" class="text-xs font-medium text-[#B4652F] hover:text-[#9c5527]">Forgot password?</a>
+                        <div class="mt-1.5">
+                            <input id="password" name="password" type="password" required placeholder="••••••••"
+                                   class="block w-full px-3.5 py-2.5 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 text-sm text-slate-900
+                                          focus:outline-none focus:ring-2 focus:ring-[#B4652F]/30 focus:border-[#B4652F] transition-colors">
+                        </div>
                     </div>
-                    <div class="mt-1.5">
-                        <input id="password" name="password" type="password" required placeholder="••••••••"
-                               class="block w-full px-3.5 py-2.5 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 text-sm text-slate-900
-                                      focus:outline-none focus:ring-2 focus:ring-[#B4652F]/30 focus:border-[#B4652F] transition-colors">
+                    <div>
+                        <label for="confirmPassword" class="block text-sm font-medium text-slate-700">Confirm</label>
+                        <div class="mt-1.5">
+                            <input id="confirmPassword" name="confirmPassword" type="password" required placeholder="••••••••"
+                                   class="block w-full px-3.5 py-2.5 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 text-sm text-slate-900
+                                          focus:outline-none focus:ring-2 focus:ring-[#B4652F]/30 focus:border-[#B4652F] transition-colors">
+                        </div>
                     </div>
                 </div>
 
-                <div class="flex items-center">
-                    <input id="remember" name="remember" type="checkbox"
-                           class="h-4 w-4 rounded border-slate-300 text-[#B4652F] focus:ring-[#B4652F]/30">
-                    <label for="remember" class="ml-2 text-sm text-slate-600">Keep me signed in</label>
+                <div class="flex items-start">
+                    <input id="terms" name="terms" type="checkbox" required
+                           class="h-4 w-4 mt-0.5 rounded border-slate-300 text-[#B4652F] focus:ring-[#B4652F]/30">
+                    <label for="terms" class="ml-2 text-sm text-slate-600">
+                        I agree to the <a href="#" class="font-medium text-[#B4652F] hover:text-[#9c5527]">Terms of Service</a> and <a href="#" class="font-medium text-[#B4652F] hover:text-[#9c5527]">Privacy Policy</a>
+                    </label>
                 </div>
 
                 <button type="submit"
                         class="w-full flex justify-center py-2.5 px-4 rounded-lg text-sm font-semibold text-white bg-[#0B1220]
                                hover:bg-[#151f33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0B1220] transition-colors">
-                    Sign in
+                    Create account
                 </button>
             </form>
 
             <p class="mt-8 text-center text-sm text-slate-500">
-                Don't have an account?
-                <a href="${pageContext.request.contextPath}/signup" class="font-semibold text-[#B4652F] hover:text-[#9c5527]">Create one</a>
+                Already have an account?
+                <a href="${pageContext.request.contextPath}/login" class="font-semibold text-[#B4652F] hover:text-[#9c5527]">Sign in</a>
             </p>
         </div>
     </div>

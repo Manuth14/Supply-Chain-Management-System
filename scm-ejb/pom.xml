@@ -25,6 +25,12 @@
             <artifactId>jakarta.jakartaee-api</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>lk.jiat.bcd</groupId>
+            <artifactId>scm-entities</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
 </project>
