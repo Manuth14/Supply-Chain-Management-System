@@ -68,7 +68,7 @@
 
         <!-- Trust line -->
         <p class="relative font-mono text-[11px] text-[#5B6B85] tracking-[0.15em] uppercase">
-            Trusted by logistics teams in 40+ countries
+            Trusted by logistics teams in 50+ countries
         </p>
     </div>
 
@@ -84,7 +84,7 @@
             <h2 class="font-display text-2xl font-semibold text-slate-900">Create your account</h2>
             <p class="text-sm text-slate-500 mt-1.5">Set up access for your company in a few minutes.</p>
 
-            <form class="mt-8 space-y-5" action="${pageContext.request.contextPath}/signup" method="POST">
+            <form class="mt-8 space-y-5" action="register" method="POST">
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label for="firstName" class="block text-sm font-medium text-slate-700">First name</label>
@@ -101,15 +101,6 @@
                                    class="block w-full px-3.5 py-2.5 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 text-sm text-slate-900
                                           focus:outline-none focus:ring-2 focus:ring-[#B4652F]/30 focus:border-[#B4652F] transition-colors">
                         </div>
-                    </div>
-                </div>
-
-                <div>
-                    <label for="company" class="block text-sm font-medium text-slate-700">Company name</label>
-                    <div class="mt-1.5">
-                        <input id="company" name="company" type="text" required placeholder="Acme Logistics Pvt Ltd"
-                               class="block w-full px-3.5 py-2.5 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 text-sm text-slate-900
-                                      focus:outline-none focus:ring-2 focus:ring-[#B4652F]/30 focus:border-[#B4652F] transition-colors">
                     </div>
                 </div>
 
@@ -141,6 +132,16 @@
                     </div>
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label">Select Role</label>
+                    <select name="role" class="form-select" required>
+                        <option value="CUSTOMER">Customer</option>
+                        <option value="VENDOR">Vendor</option>
+                        <option value="LOGISTICS_STAFF">Logistics Staff</option>
+                        <option value="CUSTOMS_OFFICIAL">Customs Official</option>
+                    </select>
+                </div>
+
                 <div class="flex items-start">
                     <input id="terms" name="terms" type="checkbox" required
                            class="h-4 w-4 mt-0.5 rounded border-slate-300 text-[#B4652F] focus:ring-[#B4652F]/30">
@@ -158,7 +159,7 @@
 
             <p class="mt-8 text-center text-sm text-slate-500">
                 Already have an account?
-                <a href="${pageContext.request.contextPath}/login" class="font-semibold text-[#B4652F] hover:text-[#9c5527]">Sign in</a>
+                <a href="login" class="font-semibold text-[#B4652F] hover:text-[#9c5527]">Sign in</a>
             </p>
         </div>
     </div>
