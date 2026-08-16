@@ -21,15 +21,27 @@
 
     <dependencies>
         <dependency>
-            <groupId>jakarta.platform</groupId>
-            <artifactId>jakarta.jakartaee-api</artifactId>
-            <scope>provided</scope>
+            <groupId>lk.jiat.bcd</groupId>
+            <artifactId>scm-core</artifactId>
+            <version>1.0</version>
         </dependency>
 
         <dependency>
             <groupId>lk.jiat.bcd</groupId>
             <artifactId>scm-entities</artifactId>
             <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
         </dependency>
     </dependencies>
 

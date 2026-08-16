@@ -51,7 +51,16 @@
                 <configuration>
                     <version>7</version>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
+
+                    <modules>
+                        <webModule>
+                            <groupId>lk.jiat.bcd</groupId>
+                            <artifactId>scm-web</artifactId>
+                            <contextRoot>/scm-web</contextRoot> <!-- මෙහි ඇති Context Root එක මතක තබා ගන්න -->
+                        </webModule>
+                    </modules>
                 </configuration>
+
             </plugin>
         </plugins>
     </build>
