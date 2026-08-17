@@ -137,7 +137,7 @@
                         <select id="role" name="role" required
                                 class="block w-full px-3.5 py-2 border border-slate-300 rounded-lg shadow-sm bg-white text-sm text-slate-900
                                        focus:outline-none focus:ring-2 focus:ring-[#B4652F]/30 focus:border-[#B4652F] transition-colors">
-                            <option value="CUSTOMER">Customer Portal (B2B Client)</option>
+                            <option value="CUSTOMER">Customer</option>
                             <option value="VENDOR">Vendor / Supplier</option>
                             <option value="LOGISTICS_STAFF">Logistics Staff</option>
                             <option value="CUSTOMS_OFFICIAL">Customs Official</option>

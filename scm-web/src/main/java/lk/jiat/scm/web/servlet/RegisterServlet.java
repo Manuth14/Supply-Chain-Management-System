@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lk.jiat.scm.core.service.UserBeanService;
+import lk.jiat.scm.entities.entity.UserStatus;
 
 import java.io.IOException;
 
@@ -23,14 +24,13 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String role = request.getParameter("role");
+        String status = request.getParameter("status");
 
-        boolean isRegistered = userBean.registerUser(firstName, lastName, email, password, role);
+        boolean isRegistered = userBean.registerUser(firstName, lastName, email, password, status, role);
 
         if (isRegistered) {
-            // සාර්ථක නම් Login පේජ් එකට යොමු කරන්න
             response.sendRedirect("login.jsp?success=1");
         } else {
-            // අසාර්ථක නම් හෝ ඊමේල් එක පවතී නම් ආපසු Signup පේජ් එකටම යවන්න
             response.sendRedirect("signup.jsp?error=exists");
         }
     }
