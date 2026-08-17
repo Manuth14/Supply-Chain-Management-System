@@ -8,7 +8,13 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/index.jsp", "/index", "/admin/*"})
+@WebFilter(urlPatterns = {
+        "/index.jsp",
+        "/index",
+        "/place_order.jsp",
+        "/product.jsp",
+        "/admin/*"
+})
 public class AuthFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
