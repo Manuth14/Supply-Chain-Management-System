@@ -12,6 +12,12 @@ public class CartItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "quantity", nullable = false)
+    private int quantity;
+
+    @Column(name = "weight", nullable = false)
+    private int weight;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
@@ -19,9 +25,6 @@ public class CartItem implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
-
-    @Column(nullable = false)
-    private int quantity;
 
     public CartItem() {
     }
