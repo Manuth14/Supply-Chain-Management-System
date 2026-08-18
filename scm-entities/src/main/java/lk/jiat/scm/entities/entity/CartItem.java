@@ -37,6 +37,22 @@ public class CartItem implements Serializable {
         this.id = id;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
     public Cart getCart() {
         return cart;
     }
@@ -51,13 +67,5 @@ public class CartItem implements Serializable {
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 }
