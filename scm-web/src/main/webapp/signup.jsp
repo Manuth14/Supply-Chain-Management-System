@@ -81,6 +81,13 @@
 
             <!-- Error message container -->
             <div id="errorAlert" class="hidden mt-4 p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg"></div>
+            <!-- Custom Exception Error Message Display -->
+            <% if (request.getAttribute("errorMessage") != null) { %>
+            <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mt-6 flex items-center gap-3 text-sm font-medium shadow-sm animate-fade-in">
+                <i class="fa-solid fa-circle-exclamation text-red-500 text-base"></i>
+                <span><%= request.getAttribute("errorMessage") %></span>
+            </div>
+            <% } %>
 
             <!-- Form Action pointing to Servlet -->
             <form id="signupForm" class="mt-6 space-y-4" action="register" method="POST">
@@ -140,7 +147,6 @@
                             <option value="CUSTOMER">Customer</option>
                             <option value="VENDOR">Vendor / Supplier</option>
                             <option value="LOGISTICS_STAFF">Logistics Staff</option>
-                            <option value="CUSTOMS_OFFICIAL">Customs Official</option>
                         </select>
                     </div>
                 </div>

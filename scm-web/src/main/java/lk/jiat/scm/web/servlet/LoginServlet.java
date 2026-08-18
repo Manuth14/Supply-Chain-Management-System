@@ -1,6 +1,7 @@
 package lk.jiat.scm.web.servlet;
 
 import jakarta.ejb.EJB;
+import jakarta.ejb.EJBException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -38,29 +39,27 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("user", user);
 
                     Set<String> roles = user.getRoles();
-                    String redirectUrl = "index.jsp";
+                    String redirectUrl = "/";
 
                     if (roles != null && !roles.isEmpty()) {
-                        if (roles.contains("CUSTOMER") || roles.contains("CUSTOMER_PORTAL")) {
-                            redirectUrl = "index.jsp";
+                        if (roles.contains("CUSTOMER")) {
+                            redirectUrl = "index";
                         } else if (roles.contains("VENDOR")) {
                             redirectUrl = "vendor/dashboard.jsp";
-                        } else if (roles.contains("LOGISTICS_STAFF") || roles.contains("LOGISTICS_PERSONNEL")) {
-                            redirectUrl = "logistics_dashboard.jsp";
-                        } else if (roles.contains("CUSTOMS_OFFICIAL")) {
-                            redirectUrl = "customs_documentation.jsp";
+                        } else if (roles.contains("LOGISTICS_STAFF")) {
+                            redirectUrl = "logistics/dashboard.jsp";
                         }
                     }
-
                     response.sendRedirect(redirectUrl);
-                }else {
-                    System.out.println("Oya kathai Passe ennaa");
+                } else {
+                    request.setAttribute("errorMessage", "Your account is still pending approval. Please wait!");
                     request.getRequestDispatcher("login.jsp").forward(request, response);
                 }
             }
         } catch (InvalidCredentialException e) {
             request.setAttribute("errorMessage", e.getMessage());
             request.getRequestDispatcher("login.jsp").forward(request, response);
+
         } catch (Exception e) {
             request.setAttribute("errorMessage", "An unexpected error occurred. Please try again.");
             request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -70,8 +69,9 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
+
         if (session != null && session.getAttribute("user") != null) {
-            response.sendRedirect("index");
+            response.sendRedirect(request.getContextPath() + "/index");
             return;
         }
 

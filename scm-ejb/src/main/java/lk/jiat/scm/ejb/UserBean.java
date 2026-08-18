@@ -24,7 +24,7 @@ public class UserBean implements UserBeanService {
     private EntityManager em;
 
     @Override
-    public boolean registerUser(String firstName, String lastName, String email, String password, String status, String selectedRole)
+    public boolean registerUser(String firstName, String lastName, String email, String password, String selectedRole)
             throws DuplicateEmailException {
 
         if (findByEmail(email) != null) {

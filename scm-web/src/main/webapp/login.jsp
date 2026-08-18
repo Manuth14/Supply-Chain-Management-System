@@ -84,7 +84,15 @@
             <h2 class="font-display text-2xl font-semibold text-slate-900">Sign in to your account</h2>
             <p class="text-sm text-slate-500 mt-1.5">Track shipments, manage orders, and view your manifests.</p>
 
-            <form class="mt-8 space-y-5" action="login" method="POST">
+            <!-- Custom Exception Error Message Display -->
+            <% if (request.getAttribute("errorMessage") != null) { %>
+            <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mt-6 flex items-center gap-3 text-sm font-medium shadow-sm animate-fade-in">
+                <i class="fa-solid fa-circle-exclamation text-red-500 text-base"></i>
+                <span><%= request.getAttribute("errorMessage") %></span>
+            </div>
+            <% } %>
+
+            <form class="mt-5 space-y-5" action="login" method="POST">
                 <div>
                     <label for="email" class="block text-sm font-medium text-slate-700">Email address</label>
                     <div class="mt-1.5">

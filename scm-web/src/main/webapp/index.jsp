@@ -57,7 +57,7 @@
                 <a href="place_order.jsp" class="bg-[#B4652F] hover:bg-[#9c5527] text-white font-semibold text-sm px-7 py-3.5 rounded-lg text-center transition-colors shadow-lg">
                     Start Shipping Now
                 </a>
-                <a href="login.jsp" class="bg-white/10 hover:bg-white/15 text-white font-semibold text-sm px-7 py-3.5 rounded-lg text-center transition-colors border border-white/10">
+                <a href="login" class="bg-white/10 hover:bg-white/15 text-white font-semibold text-sm px-7 py-3.5 rounded-lg text-center transition-colors border border-white/10">
                     Sign In to Dashboard
                 </a>
             </div>

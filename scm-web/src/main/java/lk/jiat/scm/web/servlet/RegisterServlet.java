@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lk.jiat.scm.core.exceptions.DuplicateEmailException;
 import lk.jiat.scm.core.service.UserBeanService;
 import lk.jiat.scm.entities.entity.UserStatus;
 
@@ -24,14 +25,21 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String role = request.getParameter("role");
-        String status = request.getParameter("status");
 
-        boolean isRegistered = userBean.registerUser(firstName, lastName, email, password, status, role);
+        try {
+            boolean isRegistered = userBean.registerUser(firstName, lastName, email, password, role);
 
-        if (isRegistered) {
-            response.sendRedirect("login.jsp?success=1");
-        } else {
-            response.sendRedirect("signup.jsp?error=exists");
+            if (isRegistered) {
+                response.sendRedirect("login.jsp?success=1");
+            } else {
+                response.sendRedirect("signup.jsp?error=exists");
+            }
+        }catch (DuplicateEmailException e){
+            request.setAttribute("errorMessage", e.getMessage());
+            request.getRequestDispatcher("signup.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("errorMessage", "An unexpected error occurred. Please try again.");
+            request.getRequestDispatcher("signup.jsp").forward(request, response);
         }
     }
 
