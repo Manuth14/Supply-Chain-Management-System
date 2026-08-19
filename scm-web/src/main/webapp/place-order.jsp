@@ -63,6 +63,14 @@
         <h1 class="font-display text-3xl font-bold text-slate-900 mt-1">Review Your Cart & Checkout</h1>
     </div>
 
+    <!-- Custom Exception Error Message Display -->
+    <% if (request.getAttribute("errorMessage") != null) { %>
+    <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mt-6 flex items-center gap-3 text-sm font-medium shadow-sm animate-fade-in">
+        <i class="fa-solid fa-circle-exclamation text-red-500 text-base"></i>
+        <span><%= request.getAttribute("errorMessage") %></span>
+    </div>
+    <% } %>
+
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
         <!-- Left Cart Table Section -->
@@ -95,7 +103,7 @@
                         %>
                         <tr class="hover:bg-slate-50 transition-colors" data-item-id="<%= item.getId() %>" data-rate="<%= itemRate %>">
                             <td class="py-3 px-3 font-medium text-slate-950"><%= item.getProduct().getName() %></td>
-                            <td class="py-3 px-3 font-mono text-xs">Rs. <span class="rate-val"><%= itemRate %></span></td>
+                            <td class="py-3 px-3 font-mono text-xs">Rs.<span class="rate-val"><%= itemRate %></span></td>
                             <td class="py-3 px-3">
                                 <label>
                                     <input type="number" step="1" min="1" value="<%= item.getWeight() %>"
@@ -103,7 +111,7 @@
                                            class="weight-input w-24 px-2 py-1 border border-slate-300 rounded text-xs font-mono focus:ring-2 focus:ring-[#B4652F]/30 focus:border-[#B4652F]">
                                 </label>
                             </td>
-                            <td class="py-3 px-3 font-mono text-xs font-semibold text-[#B4652F]">Rs .<span class="item-total"><%= itemTotal %></span></td>
+                            <td class="py-3 px-3 font-mono text-xs font-semibold text-[#B4652F]">Rs.<span class="item-total"><%= itemTotal %></span></td>
                             <td class="py-3 px-3 text-center">
                                 <button type="button" onclick="removeCartItem(<%= item.getId() %>, this.closest('tr'))"
                                         class="text-red-500 hover:text-red-700 text-xs font-semibold">Remove</button>
@@ -125,7 +133,7 @@
 
         <!-- Right Checkout Form Sidebar -->
         <div class="lg:col-span-1">
-            <form action="OrderServlet" method="POST" class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm sticky top-28 space-y-5">
+            <form action="order-confirm" method="POST" class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm sticky top-28 space-y-5">
                 <div>
                     <h2 class="font-display text-lg font-semibold text-slate-900">Checkout Summary</h2>
                     <p class="text-xs text-slate-500 mt-0.5">Finalize customer & shipping details</p>
@@ -250,7 +258,7 @@
             grandTotal += parseFloat(span.innerText) || 0;
         });
 
-        document.getElementById('grandTotalDisplay').innerText = '$' + grandTotal.toFixed(2);
+        document.getElementById('grandTotalDisplay').innerText = 'Rs.' + grandTotal.toFixed(2);
         document.getElementById('totalPriceInput').value = grandTotal.toFixed(2);
     }
 
