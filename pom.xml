@@ -13,7 +13,6 @@
         <module>scm-web</module>
         <module>scm-ejb</module>
         <module>scm-entities</module>
-        <module>scm-scheduler</module>
         <module>scm-core</module>
         <module>scm-security</module>
         <module>scm-ear</module>

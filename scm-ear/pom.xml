@@ -40,6 +40,12 @@
             <version>1.0</version>
             <type>jar</type>
         </dependency>
+
+        <dependency>
+            <groupId>lk.jiat.bcd</groupId>
+            <artifactId>scm-security</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
