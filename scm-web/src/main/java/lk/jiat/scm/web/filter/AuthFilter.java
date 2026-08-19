@@ -14,8 +14,8 @@ import java.util.Set;
 @WebFilter(urlPatterns = {
         "/index.jsp",
         "/index",
-        "/place_order.jsp",
-        "/product.jsp",
+        "/place-order.jsp",
+        "/products.jsp",
         "/login.jsp",
         "/login"
 })
