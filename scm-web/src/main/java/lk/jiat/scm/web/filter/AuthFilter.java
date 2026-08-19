@@ -15,9 +15,13 @@ import java.util.Set;
         "/index.jsp",
         "/index",
         "/place-order.jsp",
+        "/place-order",
         "/products.jsp",
+        "/products",
         "/login.jsp",
-        "/login"
+        "/login",
+        "/order-confirm.jsp",
+        "/order-confirm"
 })
 public class AuthFilter implements Filter {
 
@@ -60,7 +64,7 @@ public class AuthFilter implements Filter {
                 && roles != null
                 && roles.contains("CUSTOMER"));
 
-        if (isAuthorized || isLoginRequest) {
+        if (isAuthorized) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             httpResponse.sendRedirect(contextPath + "/login.jsp?error=unauthorized");
