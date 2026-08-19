@@ -21,7 +21,9 @@ import java.util.Set;
         "/login.jsp",
         "/login",
         "/order-confirm.jsp",
-        "/order-confirm"
+        "/order-confirm",
+        "/track-shipment.jsp",
+        "/track-shipment"
 })
 public class AuthFilter implements Filter {
 
