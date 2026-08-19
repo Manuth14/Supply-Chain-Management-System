@@ -11,6 +11,7 @@ import lk.jiat.scm.core.exceptions.InsufficientStockException;
 import lk.jiat.scm.core.exceptions.OrderProcessingException;
 import lk.jiat.scm.core.service.CartBeanService;
 import lk.jiat.scm.core.service.OrderBeanService;
+import lk.jiat.scm.core.service.TradeComplianceBeanService;
 import lk.jiat.scm.entities.entity.*;
 
 import java.math.BigDecimal;
@@ -27,6 +28,9 @@ public class OrderBean implements OrderBeanService {
 
     @EJB
     private CartBeanService cartService;
+
+    @EJB
+    private TradeComplianceBeanService tradeComplianceService;
 
     @Override
     public Order placeOrder(User user) throws OrderProcessingException, InsufficientStockException {
@@ -90,6 +94,13 @@ public class OrderBean implements OrderBeanService {
 
         em.persist(tracking);
         cartService.clearCart(user);
+
+        try {
+            tradeComplianceService.generateComplianceAndCustomsDoc(order);
+            System.out.println("[SUCCESS] Customs document and compliance generated for Order ID: " + order.getId());
+        } catch (Exception e) {
+            System.err.println("[ERROR] Failed to generate customs doc: " + e.getMessage());
+        }
 
         return order;
     }

@@ -23,7 +23,9 @@ import java.util.Set;
         "/order-confirm.jsp",
         "/order-confirm",
         "/track-shipment.jsp",
-        "/track-shipment"
+        "/track-shipment",
+        "/logistics/*",
+        "/vendor/*"
 })
 public class AuthFilter implements Filter {
 
@@ -46,7 +48,16 @@ public class AuthFilter implements Filter {
         boolean isLoginRequest = requestURI.endsWith("login.jsp") || requestURI.endsWith("/login");
 
         if (isLoggedIn && isLoginRequest) {
-            httpResponse.sendRedirect(contextPath + "/index");
+            User user = (User) session.getAttribute("user");
+            Set<String> roles = user.getRoles();
+
+             if (roles != null && roles.contains("LOGISTICS_STAFF")) {
+                httpResponse.sendRedirect(contextPath + "/logistics/dashboard.jsp");
+            } else if (roles != null && roles.contains("VENDOR")) {
+                httpResponse.sendRedirect(contextPath + "/vendor/dashboard.jsp");
+            } else {
+                httpResponse.sendRedirect(contextPath + "/index");
+            }
             return;
         }
 
@@ -61,15 +72,26 @@ public class AuthFilter implements Filter {
 
         User user = (User) session.getAttribute("user");
         Set<String> roles = user.getRoles();
+        boolean isActive = (user.getUserStatus() == UserStatus.APPROVED && roles != null);
 
-        boolean isAuthorized = (user.getUserStatus() == UserStatus.APPROVED
-                && roles != null
-                && roles.contains("CUSTOMER"));
-
-        if (isAuthorized) {
-            filterChain.doFilter(servletRequest, servletResponse);
+        if (requestURI.contains("/logistics/")) {
+            if (isActive && roles.contains("LOGISTICS_STAFF")) {
+                filterChain.doFilter(servletRequest, servletResponse);
+            } else {
+                httpResponse.sendRedirect(contextPath + "/login.jsp?error=unauthorized_logistics");
+            }
+        } else if (requestURI.contains("/vendor/")) {
+            if (isActive && roles.contains("VENDOR")) {
+                filterChain.doFilter(servletRequest, servletResponse);
+            } else {
+                httpResponse.sendRedirect(contextPath + "/login.jsp?error=unauthorized_vendor");
+            }
         } else {
-            httpResponse.sendRedirect(contextPath + "/login.jsp?error=unauthorized");
+            if (isActive && roles.contains("CUSTOMER")) {
+                filterChain.doFilter(servletRequest, servletResponse);
+            } else {
+                httpResponse.sendRedirect(contextPath + "/login.jsp?error=unauthorized");
+            }
         }
     }
 }

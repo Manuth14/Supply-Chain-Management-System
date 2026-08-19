@@ -26,6 +26,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String contextPath = request.getContextPath();
 
         try {
             boolean isAuthenticated = userBeanService.login(email, password);
@@ -39,15 +40,17 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("user", user);
 
                     Set<String> roles = user.getRoles();
-                    String redirectUrl = "/";
+                    String redirectUrl = contextPath + "/index";
 
                     if (roles != null && !roles.isEmpty()) {
-                        if (roles.contains("CUSTOMER")) {
-                            redirectUrl = "index";
-                        } else if (roles.contains("VENDOR")) {
-                            redirectUrl = "vendor/dashboard.jsp";
+                        if (roles.contains("ADMIN")) {
+                            redirectUrl = contextPath + "/admin/customs-compliance.jsp";
                         } else if (roles.contains("LOGISTICS_STAFF")) {
-                            redirectUrl = "logistics/dashboard.jsp";
+                            redirectUrl = contextPath + "/logistics/dashboard.jsp";
+                        } else if (roles.contains("VENDOR")) {
+                            redirectUrl = contextPath + "/vendor/dashboard.jsp";
+                        } else if (roles.contains("CUSTOMER")) {
+                            redirectUrl = contextPath + "/index";
                         }
                     }
                     response.sendRedirect(redirectUrl);
