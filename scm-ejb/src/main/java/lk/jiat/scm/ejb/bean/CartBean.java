@@ -14,6 +14,8 @@ import lk.jiat.scm.entities.entity.Product;
 import lk.jiat.scm.entities.entity.User;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -105,12 +107,13 @@ public class CartBean implements CartBeanService {
     @Override
     public void clearCart(User user) {
         Cart cart = getCartByUser(user);
-        if (cart != null) {
-            for (CartItem item : cart.getCartItems()) {
+        if (cart != null && cart.getCartItems() != null) {
+            List<CartItem> itemsToRemove = new ArrayList<>(cart.getCartItems());
+
+            for (CartItem item : itemsToRemove) {
+                cart.getCartItems().remove(item);
                 em.remove(item);
             }
-            cart.getCartItems().clear();
-            em.merge(cart);
         }
     }
 }
