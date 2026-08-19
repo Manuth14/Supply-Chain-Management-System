@@ -3,6 +3,7 @@ package lk.jiat.scm.entities.entity;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "cart_item")
@@ -12,11 +13,8 @@ public class CartItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "quantity", nullable = false)
-    private int quantity;
-
-    @Column(name = "weight", nullable = false)
-    private int weight;
+    @Column(name = "weight", nullable = false, precision = 10, scale = 2)
+    private BigDecimal weight;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id", nullable = false)
@@ -37,19 +35,11 @@ public class CartItem implements Serializable {
         this.id = id;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public int getWeight() {
+    public BigDecimal getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(BigDecimal weight) {
         this.weight = weight;
     }
 
