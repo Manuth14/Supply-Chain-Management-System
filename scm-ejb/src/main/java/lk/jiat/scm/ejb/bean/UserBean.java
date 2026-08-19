@@ -1,4 +1,4 @@
-package lk.jiat.scm.ejb;
+package lk.jiat.scm.ejb.bean;
 
 import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionAttribute;
