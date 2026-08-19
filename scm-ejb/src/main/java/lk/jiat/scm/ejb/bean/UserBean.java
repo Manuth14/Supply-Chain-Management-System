@@ -9,9 +9,9 @@ import jakarta.persistence.PersistenceContext;
 import lk.jiat.scm.core.exceptions.DuplicateEmailException;
 import lk.jiat.scm.core.exceptions.InvalidCredentialException;
 import lk.jiat.scm.core.service.UserBeanService;
-import lk.jiat.scm.ejb.util.PasswordEncryptor;
 import lk.jiat.scm.entities.entity.User;
 import lk.jiat.scm.entities.entity.UserStatus;
+import lk.jiat.scm.security.util.PasswordEncryptor;
 
 import java.util.HashSet;
 import java.util.Set;

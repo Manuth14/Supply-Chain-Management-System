@@ -33,6 +33,12 @@
         </dependency>
 
         <dependency>
+            <groupId>lk.jiat.bcd</groupId>
+            <artifactId>scm-security</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
             <scope>provided</scope>
