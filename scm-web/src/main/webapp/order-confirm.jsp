@@ -108,11 +108,11 @@
 
             <!-- Action Buttons -->
             <div class="flex flex-col sm:flex-row gap-3">
-                <a href="index.jsp" class="flex-1 bg-white hover:bg-slate-50 text-slate-800 font-semibold text-sm py-3 px-6 rounded-lg text-center transition-colors border border-slate-200 shadow-sm">
-                    Return to Home
-                </a>
-                <a href="products" class="flex-1 bg-[#B4652F] hover:bg-[#9c5527] text-white font-semibold text-sm py-3 px-6 rounded-lg text-center transition-colors shadow-sm">
+                <a href="products" class="flex-1 bg-white hover:bg-slate-50 text-slate-800 font-semibold text-sm py-3 px-6 rounded-lg text-center transition-colors border border-slate-200 shadow-sm">
                     Continue Shipping
+                </a>
+                <a href="track-shipment?orderId=${order.id}" class="flex-1 bg-[#B4652F] hover:bg-[#9c5527] text-white font-semibold text-sm py-3 px-6 rounded-lg text-center transition-colors shadow-sm">
+                    Shipment Tracking
                 </a>
             </div>
 

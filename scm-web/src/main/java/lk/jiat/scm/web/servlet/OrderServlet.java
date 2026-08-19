@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lk.jiat.scm.core.exceptions.InsufficientStockException;
 import lk.jiat.scm.core.exceptions.OrderProcessingException;
 import lk.jiat.scm.core.service.OrderBeanService;
 import lk.jiat.scm.entities.entity.Order;
@@ -32,11 +33,11 @@ public class OrderServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("order-confirm.jsp");
             dispatcher.forward(request, response);
 
-        }catch (OrderProcessingException e){
-            request.setAttribute("errorMessage", "An unexpected error occurred. Please try again.");
+        }catch (OrderProcessingException | InsufficientStockException e){
+            request.setAttribute("errorMessage", e.getMessage());
             request.getRequestDispatcher("place-order.jsp").forward(request, response);
         } catch (Exception e) {
-            request.setAttribute("errorMessage", e.getMessage());
+            request.setAttribute("errorMessage", "An unexpected error occurred. Please try again.");
             request.getRequestDispatcher("place-order.jsp").forward(request, response);
         }
     }

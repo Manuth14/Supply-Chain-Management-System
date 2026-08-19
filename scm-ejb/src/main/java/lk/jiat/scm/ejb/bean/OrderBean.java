@@ -1,16 +1,17 @@
 package lk.jiat.scm.ejb.bean;
 
 import jakarta.ejb.EJB;
+import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionAttribute;
 import jakarta.ejb.TransactionAttributeType;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+import lk.jiat.scm.core.exceptions.InsufficientStockException;
 import lk.jiat.scm.core.exceptions.OrderProcessingException;
 import lk.jiat.scm.core.service.CartBeanService;
 import lk.jiat.scm.core.service.OrderBeanService;
 import lk.jiat.scm.entities.entity.*;
-import jakarta.ejb.Stateless;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -28,8 +29,8 @@ public class OrderBean implements OrderBeanService {
     private CartBeanService cartService;
 
     @Override
-    public Order placeOrder(User user) throws OrderProcessingException {
-        // 1. Get user's active cart
+    public Order placeOrder(User user) throws OrderProcessingException, InsufficientStockException {
+
         TypedQuery<Cart> query = em.createQuery("SELECT c FROM Cart c WHERE c.user = :user", Cart.class);
         query.setParameter("user", user);
         Cart cart = query.getResultStream().findFirst().orElse(null);
@@ -41,26 +42,35 @@ public class OrderBean implements OrderBeanService {
         // 2. Create Order object
         Order order = new Order();
         order.setUser(user);
-        order.setOrderDate(LocalDateTime.now()); // LocalDateTime use karala
-        order.setStatus(OrderStatus.PENDING);    // Enum value eka set karanna
+        order.setOrderDate(LocalDateTime.now());
+        order.setStatus(OrderStatus.PENDING);
 
         List<OrderItem> orderItems = new ArrayList<>();
         double totalAmount = 0.0;
 
-        // 3. Convert CartItems to OrderItems
+        for (CartItem cartItem : cart.getCartItems()) {
+            Product product = cartItem.getProduct();
+            double orderedWeight = cartItem.getWeight().doubleValue();
+
+            if (product.getStock() < orderedWeight) {
+                throw new InsufficientStockException("Insufficient stock for product: " + product.getName());
+            }
+
+            product.setStock(product.getStock() - orderedWeight);
+            em.merge(product);
+        }
+
         for (CartItem cartItem : cart.getCartItems()) {
             OrderItem orderItem = new OrderItem();
             orderItem.setOrder(order);
             orderItem.setProduct(cartItem.getProduct());
 
-            // CartItem eketh weight kiyala thiyenawa nam (e.g., cartItem.getWeight())
             BigDecimal weight = cartItem.getWeight();
             orderItem.setWeight(weight);
 
             double itemPrice = cartItem.getProduct().getPrice().doubleValue();
             orderItem.setPrice(itemPrice);
 
-            // Total amount calculate karanna (Weight * Price)
             double itemTotal = weight.doubleValue() * itemPrice;
             totalAmount += itemTotal;
 
@@ -71,6 +81,14 @@ public class OrderBean implements OrderBeanService {
         order.setTotalAmount(totalAmount);
 
         em.persist(order);
+
+        ShipmentTracking tracking = new ShipmentTracking();
+        tracking.setOrder(order);
+        tracking.setStatus(ShipmentStatus.ORDER_PLACED);
+        tracking.setCurrentLocation("Warehouse - Initial Processing");
+        tracking.setUpdatedAt(LocalDateTime.now());
+
+        em.persist(tracking);
         cartService.clearCart(user);
 
         return order;

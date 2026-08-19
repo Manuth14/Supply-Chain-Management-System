@@ -21,6 +21,12 @@ public class Product implements Serializable {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
+    @Column(name = "stock", nullable = false)
+    private double stock;
+
+    @Column(name = "reorder_level", nullable = false)
+    private double reorderLevel;
+
     public Product() {
     }
 
@@ -54,5 +60,21 @@ public class Product implements Serializable {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public double getStock() {
+        return stock;
+    }
+
+    public void setStock(double stock) {
+        this.stock = stock;
+    }
+
+    public double getReorderLevel() {
+        return reorderLevel;
+    }
+
+    public void setReorderLevel(double reorderLevel) {
+        this.reorderLevel = reorderLevel;
     }
 }
