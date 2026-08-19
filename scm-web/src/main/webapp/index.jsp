@@ -25,8 +25,8 @@
         </div>
         <div class="hidden md:flex items-center space-x-8">
             <a href="index.jsp" class="text-sm font-medium text-white hover:text-[#B4652F] transition-colors">Home</a>
-            <a href="product.jsp" class="text-sm font-medium text-[#9AA5BD] hover:text-white transition-colors">Products</a>
-            <a href="place_order.jsp" class="text-sm font-medium text-[#9AA5BD] hover:text-white transition-colors">Place Order</a>
+            <a href="products" class="text-sm font-medium text-[#9AA5BD] hover:text-white transition-colors">Products</a>
+            <a href="place-order.jsp" class="text-sm font-medium text-[#9AA5BD] hover:text-white transition-colors">Cart & Checkout</a>
             <a href="login.jsp" class="text-sm font-medium text-[#9AA5BD] hover:text-white transition-colors">Sign in</a>
             <a href="register" class="bg-[#B4652F] hover:bg-[#9c5527] text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors">
                 Get Started
@@ -54,7 +54,7 @@
                 One platform to plan, track, and reconcile every shipment your company moves across the global supply chain network.
             </p>
             <div class="mt-10 flex flex-col sm:flex-row gap-4">
-                <a href="place_order.jsp" class="bg-[#B4652F] hover:bg-[#9c5527] text-white font-semibold text-sm px-7 py-3.5 rounded-lg text-center transition-colors shadow-lg">
+                <a href="place-order.jsp" class="bg-[#B4652F] hover:bg-[#9c5527] text-white font-semibold text-sm px-7 py-3.5 rounded-lg text-center transition-colors shadow-lg">
                     Start Shipping Now
                 </a>
                 <a href="login" class="bg-white/10 hover:bg-white/15 text-white font-semibold text-sm px-7 py-3.5 rounded-lg text-center transition-colors border border-white/10">
