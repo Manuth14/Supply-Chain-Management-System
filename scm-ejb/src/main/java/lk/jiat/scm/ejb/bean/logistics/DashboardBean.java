@@ -6,10 +6,7 @@ import jakarta.persistence.PersistenceContext;
 import lk.jiat.scm.core.exceptions.DashboardServiceException;
 import lk.jiat.scm.core.exceptions.ResourceNotFoundException;
 import lk.jiat.scm.core.service.logistics.DashboardBeanService;
-import lk.jiat.scm.entities.entity.DeclarationStatus;
-import lk.jiat.scm.entities.entity.RouteStatus;
-import lk.jiat.scm.entities.entity.ShipmentStatus;
-import lk.jiat.scm.entities.entity.ShipmentTracking;
+import lk.jiat.scm.entities.entity.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -86,6 +83,36 @@ public class DashboardBean implements DashboardBeanService {
             }
         } catch (Exception e) {
             throw new ResourceNotFoundException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<ShipmentTracking> getAllShipments() throws DashboardServiceException {
+        try {
+            return em.createQuery("SELECT s FROM ShipmentTracking s ORDER BY s.updatedAt DESC", ShipmentTracking.class)
+                    .getResultList();
+        } catch (Exception e) {
+            throw new DashboardServiceException("Failed to fetch shipments list");
+        }
+    }
+
+    @Override
+    public List<CustomsDocument> getAllCustomsDocuments() throws DashboardServiceException {
+        try {
+            return em.createQuery("SELECT c FROM CustomsDocument c ORDER BY c.id DESC", CustomsDocument.class)
+                    .getResultList();
+        } catch (Exception e) {
+            throw new DashboardServiceException("Failed to fetch customs compliance documents");
+        }
+    }
+
+    @Override
+    public List<Route> getAllRoutes() throws DashboardServiceException {
+        try {
+            return em.createQuery("SELECT r FROM Route r ORDER BY r.id DESC", Route.class)
+                    .getResultList();
+        } catch (Exception e) {
+            throw new DashboardServiceException("Failed to fetch routes list");
         }
     }
 }
