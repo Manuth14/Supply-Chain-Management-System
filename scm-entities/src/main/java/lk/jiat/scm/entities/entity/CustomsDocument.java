@@ -24,7 +24,6 @@ public class CustomsDocument implements Serializable {
     @Column(name = "declaration_status", length = 20, nullable = false)
     private DeclarationStatus declarationStatus;
 
-    // --- Point 7: Trade Compliance Fields ---
     @Column(name = "hs_code", length = 20)
     private String hsCode; // e.g., HS-8517.12 (For electronic/supply items)
 
