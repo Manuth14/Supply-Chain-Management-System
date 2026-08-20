@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,9 +76,9 @@
             <div class="flex items-center gap-3 w-full sm:w-auto">
                 <select class="bg-slate-50 border border-slate-200 text-xs font-medium text-slate-600 rounded-xl px-4 py-2.5 focus:outline-none focus:border-[#B4652F]">
                     <option value="">Filter by Status</option>
-                    <option value="PENDING">Pending</option>
+                    <option value="ORDER_PLACED">Order Placed</option>
+                    <option value="DISPATCHED">Dispatched</option>
                     <option value="IN_TRANSIT">In Transit</option>
-                    <option value="OUT_FOR_DELIVERY">Out for Delivery</option>
                     <option value="DELIVERED">Delivered</option>
                 </select>
             </div>
@@ -90,58 +91,44 @@
                     <thead>
                     <tr class="bg-slate-50/70 font-mono text-xs text-slate-500 uppercase border-b border-slate-100">
                         <th class="px-6 py-4">Tracking ID</th>
-                        <th class="px-6 py-4">Destination / Route</th>
-                        <th class="px-6 py-4">Carrier / Staff</th>
+                        <th class="px-6 py-4">Current Location / Hub</th>
+                        <th class="px-6 py-4">Order Ref</th>
                         <th class="px-6 py-4">Current Status</th>
                         <th class="px-6 py-4 text-right">Actions</th>
                     </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 text-sm text-slate-600">
 
-                    <!-- Row 1 -->
-                    <tr class="hover:bg-slate-50/50 transition-colors">
-                        <td class="px-6 py-4 font-mono font-medium text-slate-900">#TRK-4081</td>
-                        <td class="px-6 py-4 font-medium">Colombo 03 Hub</td>
-                        <td class="px-6 py-4 text-slate-500">Saman Kumara (DHL)</td>
-                        <td class="px-6 py-4">
-                            <span class="px-3 py-1 font-mono text-xs font-semibold text-blue-700 bg-blue-50 rounded-full border border-blue-200">Out for Delivery</span>
-                        </td>
-                        <td class="px-6 py-4 text-right">
-                            <button onclick="openUpdateModal('#TRK-4081', 'OUT_FOR_DELIVERY')" class="text-xs font-semibold text-[#B4652F] hover:bg-[#B4652F]/20 bg-[#B4652F]/10 px-3.5 py-2 rounded-lg transition-colors">
-                                <i class="fa-solid fa-pen-to-square mr-1"></i> Update Status
-                            </button>
-                        </td>
-                    </tr>
-
-                    <!-- Row 2 -->
-                    <tr class="hover:bg-slate-50/50 transition-colors">
-                        <td class="px-6 py-4 font-mono font-medium text-slate-900">#TRK-4080</td>
-                        <td class="px-6 py-4 font-medium">Gampaha Distribution Center</td>
-                        <td class="px-6 py-4 text-slate-500">Chathura Perera (FedEx)</td>
-                        <td class="px-6 py-4">
-                            <span class="px-3 py-1 font-mono text-xs font-semibold text-amber-700 bg-amber-50 rounded-full border border-amber-200">In Transit</span>
-                        </td>
-                        <td class="px-6 py-4 text-right">
-                            <button onclick="openUpdateModal('#TRK-4080', 'IN_TRANSIT')" class="text-xs font-semibold text-[#B4652F] hover:bg-[#B4652F]/20 bg-[#B4652F]/10 px-3.5 py-2 rounded-lg transition-colors">
-                                <i class="fa-solid fa-pen-to-square mr-1"></i> Update Status
-                            </button>
-                        </td>
-                    </tr>
-
-                    <!-- Row 3 -->
-                    <tr class="hover:bg-slate-50/50 transition-colors">
-                        <td class="px-6 py-4 font-mono font-medium text-slate-900">#TRK-4079</td>
-                        <td class="px-6 py-4 font-medium">Kandy Central Warehouse</td>
-                        <td class="px-6 py-4 text-slate-500">Nuwan Silva (Local Fleet)</td>
-                        <td class="px-6 py-4">
-                            <span class="px-3 py-1 font-mono text-xs font-semibold text-slate-600 bg-slate-100 rounded-full border border-slate-200">Pending</span>
-                        </td>
-                        <td class="px-6 py-4 text-right">
-                            <button onclick="openUpdateModal('#TRK-4079', 'PENDING')" class="text-xs font-semibold text-[#B4652F] hover:bg-[#B4652F]/20 bg-[#B4652F]/10 px-3.5 py-2 rounded-lg transition-colors">
-                                <i class="fa-solid fa-pen-to-square mr-1"></i> Update Status
-                            </button>
-                        </td>
-                    </tr>
+                    <c:choose>
+                        <c:when test="${not empty activeShipments}">
+                            <c:forEach var="shipment" items="${activeShipments}">
+                                <tr class="hover:bg-slate-50/50 transition-colors">
+                                    <td class="px-6 py-4 font-mono font-medium text-slate-900">#TRK-${shipment.id}</td>
+                                    <td class="px-6 py-4 font-medium">${shipment.currentLocation != null ? shipment.currentLocation : 'Hub Processing'}</td>
+                                    <td class="px-6 py-4 font-mono text-xs">ORD-${shipment.order.id}</td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-3 py-1 font-mono text-xs font-semibold text-blue-700 bg-blue-50 rounded-full border border-blue-200">
+                                                ${shipment.status}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <button type="button"
+                                                onclick="openUpdateModal('${shipment.id}', '${shipment.status}', '${shipment.currentLocation}')"
+                                                class="text-xs font-semibold text-[#B4652F] hover:bg-[#B4652F]/20 bg-[#B4652F]/10 px-3.5 py-2 rounded-lg transition-colors">
+                                            <i class="fa-solid fa-pen-to-square mr-1"></i> Update Status
+                                        </button>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <tr>
+                                <td colspan="5" class="px-6 py-4 text-center text-slate-400 py-8">
+                                    No shipment records found in the database.
+                                </td>
+                            </tr>
+                        </c:otherwise>
+                    </c:choose>
 
                     </tbody>
                 </table>
@@ -149,11 +136,7 @@
 
             <!-- Table Pagination Footer -->
             <div class="px-6 py-4 border-t border-slate-100 bg-slate-50/50 flex items-center justify-between text-xs text-slate-500">
-                <span>Showing <strong class="text-slate-700">3</strong> of <strong class="text-slate-700">42</strong> total shipments</span>
-                <div class="flex items-center gap-2">
-                    <button class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 font-medium">Previous</button>
-                    <button class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 font-medium">Next</button>
-                </div>
+                <span>Showing dynamic results from database</span>
             </div>
         </div>
 
@@ -166,22 +149,33 @@
     <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-slate-200">
         <div class="flex justify-between items-center mb-4">
             <h3 class="font-display text-lg font-semibold text-slate-900">Update Shipment Status</h3>
-            <button onclick="closeUpdateModal()" class="text-slate-400 hover:text-slate-600">
+            <button type="button" onclick="closeUpdateModal()" class="text-slate-400 hover:text-slate-600">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
         </div>
-        <p class="text-xs text-slate-500 mb-4">Modifying tracking milestone for item: <span id="modalTrackingId" class="font-mono font-bold text-slate-800"></span></p>
+        <p class="text-xs text-slate-500 mb-4">Modifying tracking milestone for item ID: <span id="modalDisplayId" class="font-mono font-bold text-slate-800"></span></p>
 
-        <form action="#" method="POST">
-            <div class="mb-4">
+        <form action="${pageContext.request.contextPath}/logistics/update-shipment" method="POST" class="space-y-4">
+            <!-- Hidden Input for Shipment ID -->
+            <input type="hidden" id="modalShipmentId" name="shipmentId">
+
+            <div>
                 <label class="block text-xs font-mono uppercase tracking-wider text-slate-600 mb-2">New Milestone Status</label>
-                <select id="statusSelect" class="w-full bg-slate-50 border border-slate-200 text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-[#B4652F]">
-                    <option value="PENDING">PENDING</option>
+                <select name="status" id="statusSelect" class="w-full bg-slate-50 border border-slate-200 text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-[#B4652F]">
+                    <option value="ORDER_PLACED">ORDER_PLACED</option>
+                    <option value="DISPATCHED">DISPATCHED</option>
                     <option value="IN_TRANSIT">IN_TRANSIT</option>
-                    <option value="OUT_FOR_DELIVERY">OUT_FOR_DELIVERY</option>
                     <option value="DELIVERED">DELIVERED</option>
                 </select>
             </div>
+
+            <div>
+                <label class="block text-xs font-mono uppercase tracking-wider text-slate-600 mb-2">Current Location / Hub</label>
+                <input type="text" id="modalLocation" name="currentLocation" required
+                       class="w-full bg-slate-50 border border-slate-200 text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-[#B4652F]"
+                       placeholder="e.g. Colombo 03 Central Hub">
+            </div>
+
             <div class="flex justify-end gap-3 mt-6">
                 <button type="button" onclick="closeUpdateModal()" class="px-4 py-2 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50">Cancel</button>
                 <button type="submit" class="px-5 py-2 rounded-xl bg-[#0B1220] hover:bg-slate-800 text-xs font-semibold text-white">Save Changes</button>
@@ -199,14 +193,18 @@
 
 <!-- Interactive Modal Scripts -->
 <script>
-    function openUpdateModal(trackingId, currentStatus) {
-        document.getElementById('modalTrackingId').innerText = trackingId;
+    function openUpdateModal(id, currentStatus, currentLocation) {
+        document.getElementById('modalShipmentId').value = id;
+        document.getElementById('modalDisplayId').innerText = '#TRK-' + id;
         document.getElementById('statusSelect').value = currentStatus;
+        document.getElementById('modalLocation').value = (currentLocation !== 'null' && currentLocation !== '') ? currentLocation : '';
         document.getElementById('statusModal').classList.remove('hidden');
     }
+
     function closeUpdateModal() {
         document.getElementById('statusModal').classList.add('hidden');
     }
+
     function openCreateModal() {
         alert("Redirect to Create Dispatch form or open creation modal.");
     }

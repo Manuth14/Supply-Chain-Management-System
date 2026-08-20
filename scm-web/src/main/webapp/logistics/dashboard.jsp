@@ -49,19 +49,19 @@
     <aside class="w-full lg:w-72 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 shrink-0 sticky top-28">
         <p class="font-mono text-[11px] text-slate-400 uppercase tracking-widest mb-4">Core Modules</p>
         <nav class="space-y-1.5">
-            <a href="dashboard.jsp" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold bg-[#0B1220] text-white shadow-sm transition-colors">
+            <a href="${pageContext.request.contextPath}/logistics/dashboard" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold bg-[#0B1220] text-white shadow-sm transition-colors">
                 <i class="fa-solid fa-boxes-stacked w-5 text-[#B4652F]"></i>
                 <span>Overview Dashboard</span>
             </a>
-            <a href="shipments.jsp" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+            <a href="${pageContext.request.contextPath}/logistics/shipments" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
                 <i class="fa-solid fa-chart-pie w-5 text-slate-400"></i>
                 <span>Manage Shipments</span>
             </a>
-            <a href="customs-compliance.jsp" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+            <a href="${pageContext.request.contextPath}/logistics/customs-compliance" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
                 <i class="fa-solid fa-file-shield w-5 text-slate-400"></i>
                 <span>Customs & Compliance</span>
             </a>
-            <a href="route-optimization.jsp" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+            <a href="${pageContext.request.contextPath}/logistics/route-optimization" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
                 <i class="fa-solid fa-route w-5 text-slate-400"></i>
                 <span>Route Optimization</span>
             </a>

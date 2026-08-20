@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,19 +50,19 @@
     <aside class="w-full lg:w-72 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 shrink-0 sticky top-28">
         <p class="font-mono text-[11px] text-slate-400 uppercase tracking-widest mb-4">Core Modules</p>
         <nav class="space-y-1.5">
-            <a href="dashboard" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+            <a href="${pageContext.request.contextPath}/logistics/dashboard" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
                 <i class="fa-solid fa-chart-pie w-5 text-slate-400"></i>
                 <span>Overview Dashboard</span>
             </a>
-            <a href="shipments.jsp" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+            <a href="${pageContext.request.contextPath}/logistics/shipments" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
                 <i class="fa-solid fa-boxes-stacked w-5 text-slate-400"></i>
                 <span>Manage Shipments</span>
             </a>
-            <a href="customs-compliance.jsp" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+            <a href="${pageContext.request.contextPath}/logistics/customs-compliance" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
                 <i class="fa-solid fa-file-shield w-5 text-slate-400"></i>
                 <span>Customs & Compliance</span>
             </a>
-            <a href="route-optimization.jsp" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold bg-[#0B1220] text-white shadow-sm transition-colors">
+            <a href="${pageContext.request.contextPath}/logistics/route-optimization" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold bg-[#0B1220] text-white shadow-sm transition-colors">
                 <i class="fa-solid fa-route w-5 text-[#B4652F]"></i>
                 <span>Route Optimization</span>
             </a>
@@ -142,24 +143,30 @@
                     </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 text-sm text-slate-600">
-                    <tr class="hover:bg-slate-50/50 transition-colors">
-                        <td class="px-6 py-4 font-mono font-medium text-slate-900">#RT-COL-01</td>
-                        <td class="px-6 py-4 font-medium">Colombo Central Hub</td>
-                        <td class="px-6 py-4 text-slate-500">Kandy Distribution Terminal</td>
-                        <td class="px-6 py-4 font-mono text-xs font-semibold text-slate-700">2h 45m</td>
-                        <td class="px-6 py-4 text-right">
-                            <span class="px-3 py-1 font-mono text-xs font-semibold text-emerald-700 bg-emerald-50 rounded-full border border-emerald-200">Fully Optimized</span>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-slate-50/50 transition-colors">
-                        <td class="px-6 py-4 font-mono font-medium text-slate-900">#RT-GMP-04</td>
-                        <td class="px-6 py-4 font-medium">Gampaha Hub</td>
-                        <td class="px-6 py-4 text-slate-500">Negombo Coastal Depot</td>
-                        <td class="px-6 py-4 font-mono text-xs font-semibold text-slate-700">1h 10m</td>
-                        <td class="px-6 py-4 text-right">
-                            <span class="px-3 py-1 font-mono text-xs font-semibold text-amber-700 bg-amber-50 rounded-full border border-amber-200">Re-routing</span>
-                        </td>
-                    </tr>
+                    <c:choose>
+                        <c:when test="${not empty routeList}">
+                            <c:forEach var="route" items="${routeList}">
+                                <tr class="hover:bg-slate-50/50 transition-colors">
+                                    <td class="px-6 py-4 font-mono font-medium text-slate-900">${route.routeCode}</td>
+                                    <td class="px-6 py-4 font-medium">${route.originHub}</td>
+                                    <td class="px-6 py-4 text-slate-500">${route.destinationHub}</td>
+                                    <td class="px-6 py-4 font-mono text-xs font-semibold text-slate-700">${route.distanceKm} km</td>
+                                    <td class="px-6 py-4 text-right">
+                    <span class="px-3 py-1 font-mono text-xs font-semibold text-emerald-700 bg-emerald-50 rounded-full border border-emerald-200">
+                            ${route.status}
+                    </span>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <tr>
+                                <td colspan="5" class="px-6 py-4 text-center text-slate-400 py-8">
+                                    No route optimization records found in the database.
+                                </td>
+                            </tr>
+                        </c:otherwise>
+                    </c:choose>
                     </tbody>
                 </table>
             </div>
