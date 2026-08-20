@@ -21,7 +21,6 @@ public class CartResource {
     @EJB
     private CartBeanService cartBeanService;
 
-    // 1. Update Cart Item Weight (AJAX)
     @POST
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -37,7 +36,6 @@ public class CartResource {
             Long cartItemId = Long.valueOf(payload.get("cartItemId").toString());
             BigDecimal newWeight = new BigDecimal(payload.get("weight").toString());
 
-            // Calling EJB method that accepts (User, cartItemId, weight)
             cartBeanService.updateCartItemWeight(user, cartItemId, newWeight);
 
             return Response.ok(Map.of("status", "success", "message", "Weight updated successfully")).build();
@@ -47,7 +45,6 @@ public class CartResource {
         }
     }
 
-    // 2. Remove Cart Item (AJAX)
     @DELETE
     @Path("/remove/{cartItemId}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -59,7 +56,6 @@ public class CartResource {
             }
             User user = (User) session.getAttribute("user");
 
-            // Calling EJB method that accepts (User, cartItemId)
             cartBeanService.removeFromCart(user, cartItemId);
 
             return Response.ok(Map.of("status", "success", "message", "Item removed successfully")).build();
