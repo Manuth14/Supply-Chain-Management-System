@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet {
                         if (roles.contains("ADMIN")) {
                             redirectUrl = contextPath + "/admin/customs-compliance.jsp";
                         } else if (roles.contains("LOGISTICS_STAFF")) {
-                            redirectUrl = contextPath + "/logistics/dashboard.jsp";
+                            redirectUrl = contextPath + "/logistics/dashboard";
                         } else if (roles.contains("VENDOR")) {
                             redirectUrl = contextPath + "/vendor/dashboard.jsp";
                         } else if (roles.contains("CUSTOMER")) {
